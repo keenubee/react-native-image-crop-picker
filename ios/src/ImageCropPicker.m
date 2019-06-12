@@ -186,6 +186,11 @@ RCT_EXPORT_METHOD(openCamera:(NSDictionary *)options
             }
         }
 
+        if ([mediaType isEqualToString:@"any"]) {
+            picker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:UIImagePickerControllerSourceTypeCamera];
+            picker.videoQuality = UIImagePickerControllerQualityTypeHigh;
+        }
+        
         if ([[self.options objectForKey:@"useFrontCamera"] boolValue]) {
             picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
         }
