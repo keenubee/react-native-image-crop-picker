@@ -214,9 +214,11 @@ RCT_EXPORT_METHOD(openCamera:(NSDictionary *)options
       withLocalIdentifier:nil
                completion:^(NSDictionary* video) {
                    if (video == nil) {
-                       [picker dismissViewControllerAnimated:YES completion:[self waitAnimationEnd:^{
-                           self.reject(ERROR_CANNOT_PROCESS_VIDEO_KEY, ERROR_CANNOT_PROCESS_VIDEO_MSG, nil);
-                       }]];
+                       [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+                           [picker dismissViewControllerAnimated:YES completion:[self waitAnimationEnd:^{
+                             self.resolve(video);
+                           }]];
+                       }];
                        return;
                    }
 
